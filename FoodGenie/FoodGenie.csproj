@@ -205,10 +205,19 @@
     <Compile Include="Migrations\201810230702226_AddFnameLnameRegister&amp;Identity.Designer.cs">
       <DependentUpon>201810230702226_AddFnameLnameRegister&amp;Identity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810230746035_Added cart model and recipe model.cs" />
+    <Compile Include="Migrations\201810230746035_Added cart model and recipe model.Designer.cs">
+      <DependentUpon>201810230746035_Added cart model and recipe model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810230753103_Added cartitem interface, recipelist to AppUserModel &amp; removed cart model.cs" />
+    <Compile Include="Migrations\201810230753103_Added cartitem interface, recipelist to AppUserModel &amp; removed cart model.Designer.cs">
+      <DependentUpon>201810230753103_Added cartitem interface, recipelist to AppUserModel &amp; removed cart model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Recipe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -291,6 +300,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201810230702226_AddFnameLnameRegister&amp;Identity.resx">
       <DependentUpon>201810230702226_AddFnameLnameRegister&amp;Identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810230746035_Added cart model and recipe model.resx">
+      <DependentUpon>201810230746035_Added cart model and recipe model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810230753103_Added cartitem interface, recipelist to AppUserModel &amp; removed cart model.resx">
+      <DependentUpon>201810230753103_Added cartitem interface, recipelist to AppUserModel &amp; removed cart model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

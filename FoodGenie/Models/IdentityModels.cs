@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -20,6 +21,7 @@ namespace FoodGenie.Models
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public List<ICartItem> RecipeList { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -33,5 +35,10 @@ namespace FoodGenie.Models
         {
             return new ApplicationDbContext();
         }
+    }
+    public interface ICartItem
+    {
+        Recipe RecName { get; set; }
+        int Count { get; set; }
     }
 }
