@@ -21,7 +21,7 @@ namespace FoodGenie.Models
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<ICartItem> RecipeList { get; set; }
+        public Cart Cart { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -35,10 +35,5 @@ namespace FoodGenie.Models
         {
             return new ApplicationDbContext();
         }
-    }
-    public interface ICartItem
-    {
-        Recipe RecName { get; set; }
-        int Count { get; set; }
     }
 }

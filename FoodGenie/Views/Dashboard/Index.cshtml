@@ -1,0 +1,13 @@
+﻿@model List<FoodGenie.Models.ICartItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<ul></ul>
+@foreach (var item in Model)
+{
+    <li>Name: @item.RecName : Count @item.Count</li>
+}
+
