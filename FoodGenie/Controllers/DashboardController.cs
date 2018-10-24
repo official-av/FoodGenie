@@ -60,33 +60,36 @@ namespace FoodGenie.Controllers
         }
 
         //remove recipes from user cart
-        public ActionResult RemoveRecipe(int recId)
+        public ActionResult RemoveRecipe(int itemId)
         {
             var recList = GetCartItems();
-            if (recList.Exists(c => c.Recipe.Id == recId))
+            if (recList.Exists(c => c.Id == itemId))
             {
-                recList.RemoveAll(r => r.Recipe.Id == recId);
+                recList.RemoveAll(r => r.Id == itemId);
                 _context.SaveChanges();
             }
             return RedirectToAction("Index", "Dashboard");
         }
 
-        public ActionResult CartIncrement(int recId)
+        public ActionResult CartIncrement(int itemId)
         {
-            var recipe = GetCartItems().SingleOrDefault(c => c.Recipe.Id == recId);
+            var recipe = GetCartItems().SingleOrDefault(c => c.Id == itemId);
             recipe.Count++;
-            RemoveRecipe(recId); //remove recipe with old count
+            RemoveRecipe(itemId); //remove recipe with old count
             GetCartItems().Add(recipe); //insert recipe with modified count
             _context.SaveChanges();
             return RedirectToAction("Index", "Dashboard");
         }
 
-        public ActionResult CartDecrement(int recId)
+        public ActionResult CartDecrement(int itemId)
         {
-            var recipe = GetCartItems().SingleOrDefault(c => c.Recipe.Id == recId);
+            var recipe = GetCartItems().SingleOrDefault(c => c.Id == itemId);
             recipe.Count--;
-            RemoveRecipe(recId); //remove recipe with old count
-            GetCartItems().Add(recipe); //insert recipe with modified count
+            RemoveRecipe(itemId); //remove recipe with old count
+            if (recipe.Count > 0)
+            {
+                GetCartItems().Add(recipe); //insert recipe with modified count
+            }
             _context.SaveChanges();
             return RedirectToAction("Index", "Dashboard");
         }

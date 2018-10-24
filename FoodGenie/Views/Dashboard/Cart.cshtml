@@ -5,8 +5,12 @@
         <ul>
             @foreach (var item in Model)
             {
-                <li>@item.Recipe.Name</li>
-            }
+                <li> 
+                @Html.ActionLink("+", "CartIncrement", "Dashboard", new { itemId = item.Id }, new { @class = "btn btn-danger" })
+                @item.Recipe.Name with Count @item.Count
+                @Html.ActionLink("-", "CartDecrement", "Dashboard", new { itemId = item.Id }, new { @class = "btn btn-danger" })
+                </li>
+        }
         </ul>
     </div>
 </div>
