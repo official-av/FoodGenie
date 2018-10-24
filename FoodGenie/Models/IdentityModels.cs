@@ -21,7 +21,7 @@ namespace FoodGenie.Models
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Cart Cart { get; set; }
+        public virtual List<CartItem> CartItems { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -30,6 +30,7 @@ namespace FoodGenie.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+        public DbSet<Recipe> Recipes { get; set; }
 
         public static ApplicationDbContext Create()
         {

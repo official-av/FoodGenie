@@ -1,0 +1,29 @@
+﻿@model FoodGenie.Models.Recipe
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Recipes</h2>
+@using (Html.BeginForm("Add", "Recipe"))
+{
+    <div class="form-group">
+        @Html.LabelFor(c => c.Name)
+        @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Description)
+        @Html.TextAreaFor(c => c.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.CalorieCount)
+        @Html.TextBoxFor(c => c.CalorieCount, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Price)
+        @Html.TextBoxFor(c => c.Price, new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(m => m.Id)
+    <button class="btn btn-primary">Save</button>
+}
+

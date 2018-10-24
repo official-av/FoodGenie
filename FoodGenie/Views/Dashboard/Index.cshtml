@@ -1,13 +1,27 @@
-﻿@model List<FoodGenie.Models.ICartItem>
+﻿@using System.Web.UI.WebControls
+@model FoodGenie.ViewModels.DashboardViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Available Recipes</div>
+            <div class="panel-body">
+                <ul>
+                    @foreach (var item in Model.RecList)
+                    {
+                        <li>Name: @item.Name</li>
+                        @Html.ActionLink("+","AddRecipe","Dashboard",new {recId=item.Id}, new { @class = "btn btn-primary" })
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        @Html.Partial("Cart", Model.CartItems)
+    </div>
+</div>
 
-<h2>Index</h2>
-<ul></ul>
-@foreach (var item in Model)
-{
-    <li>Name: @item.RecName : Count @item.Count</li>
-}
 

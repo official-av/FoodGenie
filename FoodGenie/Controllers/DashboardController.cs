@@ -4,13 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FoodGenie.Models;
+using FoodGenie.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace FoodGenie.Controllers
 {
     public class DashboardController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly  ApplicationDbContext _context;
 
         public DashboardController()
         {
@@ -22,64 +23,85 @@ namespace FoodGenie.Controllers
             _context.Dispose();
         }
 
-        private List<ICartItem> GetRecipeList()
+        private List<CartItem> GetCartItems()
         {
-            return _context.Users.Single((u => u.Id == User.Identity.GetUserId())).Cart.RecipeList;
+            var id = User.Identity.GetUserId();
+            var user = _context.Users.FirstOrDefault((u => u.Id == id));
+            if (user?.CartItems == null)
+            {
+                user.CartItems = new List<CartItem>();
+                _context.SaveChanges();
+            }
+
+            return user.CartItems;
         }
 
-        private void AddRecipe(ICartItem rec)
+        private Recipe GetRecipe(int id)
         {
-            var recList = GetRecipeList();
-            if (!recList.Exists(c => c.RecName.Id == rec.RecName.Id)) //just update the count when recipe already in cart
-            {
-                rec.Count = 1;
-                recList.Add(rec);
-            }
-            /*else
-            {
-                recList.Add(rec);
-                rec.Count += recipe.Count;
-                recList.RemoveAll(r => r.RecName.Id == recipe.RecName.Id);
-                recList.Add(rec);
-            }*/
+            return _context.Recipes.ToList().SingleOrDefault(c => c.Id == id);
+        }
 
+        //add recipes to user cart
+        public ActionResult AddRecipe(int recId)
+        {
+            var rec = GetRecipe(recId);
+            var cartItems = GetCartItems();
+            if (!cartItems.Exists(c=>c.Recipe.Id==recId))
+            {
+                var currentItem = new CartItem
+                {
+                    Count = 1,
+                    Recipe = rec
+                };
+                cartItems.Add(currentItem);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        //remove recipes from user cart
+        public ActionResult RemoveRecipe(int recId)
+        {
+            var recList = GetCartItems();
+            if (recList.Exists(c => c.Recipe.Id == recId))
+            {
+                recList.RemoveAll(r => r.Recipe.Id == recId);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        public ActionResult CartIncrement(int recId)
+        {
+            var recipe = GetCartItems().SingleOrDefault(c => c.Recipe.Id == recId);
+            recipe.Count++;
+            RemoveRecipe(recId); //remove recipe with old count
+            GetCartItems().Add(recipe); //insert recipe with modified count
             _context.SaveChanges();
+            return RedirectToAction("Index", "Dashboard");
         }
 
-        private void RemoveRecipe(ICartItem rec)
+        public ActionResult CartDecrement(int recId)
         {
-            var recList = GetRecipeList();
-            if (!recList.Exists(c => c.RecName.Id == rec.RecName.Id)) //just update the count when recipe already in cart
-            {
-                recList.RemoveAll(r => r.RecName.Id == rec.RecName.Id);
-            }
-            /*
-            recipe.Count -= rec.Count;
-                recList.RemoveAll(r => r.RecName.Id == rec.RecName.Id);
-            }*/
-        }
-
-        private void CartIncrement(ICartItem rec)
-        {
-            GetRecipeList().SingleOrDefault(c => c.RecName.Id == rec.RecName.Id).Count++;
-        }
-
-        private void CartDecrement(ICartItem rec)
-        {
-            if (rec.Count == 0)
-            {
-                RemoveRecipe(rec);
-            }
-            else
-            {
-                GetRecipeList().SingleOrDefault(c => c.RecName.Id == rec.RecName.Id).Count--;
-            }
+            var recipe = GetCartItems().SingleOrDefault(c => c.Recipe.Id == recId);
+            recipe.Count--;
+            RemoveRecipe(recId); //remove recipe with old count
+            GetCartItems().Add(recipe); //insert recipe with modified count
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Dashboard");
         }
 
         
         public ActionResult Index()
         {
-            return View(GetRecipeList());
+            var r = GetCartItems() ?? new List<CartItem>();
+            DashboardViewModel val = new DashboardViewModel
+            {
+                RecList = _context.Recipes.ToList(),
+                CartItems = r
+            };
+            return View(val);
         }
+        
     }
 }

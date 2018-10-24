@@ -1,0 +1,12 @@
+﻿@model List<FoodGenie.Models.CartItem>
+<div class="panel panel-default">
+    <div class="panel-heading">Your Cart</div>
+    <div class="panel-body">
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>@item.Recipe.Name</li>
+            }
+        </ul>
+    </div>
+</div>

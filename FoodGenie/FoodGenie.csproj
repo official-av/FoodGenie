@@ -198,6 +198,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -218,14 +219,31 @@
     <Compile Include="Migrations\201810231134430_addedCartModelAgain.Designer.cs">
       <DependentUpon>201810231134430_addedCartModelAgain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810240600116_added dbsets.cs" />
+    <Compile Include="Migrations\201810240600116_added dbsets.Designer.cs">
+      <DependentUpon>201810240600116_added dbsets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810240734005_removed interface.cs" />
+    <Compile Include="Migrations\201810240734005_removed interface.Designer.cs">
+      <DependentUpon>201810240734005_removed interface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810241027501_made class for cartitem.cs" />
+    <Compile Include="Migrations\201810241027501_made class for cartitem.Designer.cs">
+      <DependentUpon>201810241027501_made class for cartitem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810241058575_rework.cs" />
+    <Compile Include="Migrations\201810241058575_rework.Designer.cs">
+      <DependentUpon>201810241058575_rework.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -288,6 +306,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Navbar.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Recipe\Index.cshtml" />
+    <Content Include="Views\Dashboard\Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -317,6 +337,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810231134430_addedCartModelAgain.resx">
       <DependentUpon>201810231134430_addedCartModelAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810240600116_added dbsets.resx">
+      <DependentUpon>201810240600116_added dbsets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810240734005_removed interface.resx">
+      <DependentUpon>201810240734005_removed interface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810241027501_made class for cartitem.resx">
+      <DependentUpon>201810241027501_made class for cartitem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810241058575_rework.resx">
+      <DependentUpon>201810241058575_rework.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
