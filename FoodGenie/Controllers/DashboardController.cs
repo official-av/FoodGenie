@@ -25,11 +25,10 @@ namespace FoodGenie.Controllers
 
         private List<CartItem> GetCartItems()
         {
-            var id = User.Identity.GetUserId();
-            var user = _context.Users.FirstOrDefault((u => u.Id == id));
+            var user = GetActiveUser();
             if (user?.CartItems == null)
             {
-                user.CartItems = new List<CartItem>();
+                user.CartItems=new List<CartItem>();
                 _context.SaveChanges();
             }
 
@@ -105,6 +104,23 @@ namespace FoodGenie.Controllers
             };
             return View(val);
         }
-        
+
+        public ActionResult Success(CheckoutViewModel data)
+        {   ResetCart();
+            return View(data);
+        }
+
+        private void ResetCart()
+        {
+            GetActiveUser().CartItems.RemoveAll(c => 1 == 1);
+            _context.SaveChanges();
+        }
+
+        private ApplicationUser GetActiveUser()
+        {
+            var id = User.Identity.GetUserId();
+            var user = _context.Users.FirstOrDefault((u => u.Id == id));
+            return user;
+        }
     }
 }

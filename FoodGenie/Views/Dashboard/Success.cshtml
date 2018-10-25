@@ -1,0 +1,13 @@
+﻿@model FoodGenie.ViewModels.CheckoutViewModel
+
+<h2>Order Complete</h2>
+<div class="panel panel-success">
+    <div class="panel-heading">Order Details</div>
+    <div class="panel-body">
+        Your transaction of <strong>₹ @Model.Amount</strong> was successful.
+        Our chefs are at work and soon the order will be delivered at
+        <strong>
+            @Model.Address
+        </strong>
+    </div>
+</div>

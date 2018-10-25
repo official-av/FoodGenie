@@ -5,21 +5,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
-    <div class="col-lg-6">
-        <div class="panel panel-default">
+    <div class="col-md-6">
+        <div class="panel panel-primary panel-custom">
             <div class="panel-heading">Available Recipes</div>
             <div class="panel-body">
-                <ul>
-                    @foreach (var item in Model.RecList)
+                <div class="panel-group">
+                    @for (var index = 0; index < Model.RecList.Count; index++)
                     {
-                        <li>Name: @item.Name</li>
-                        @Html.ActionLink("+","AddRecipe","Dashboard",new {recId=item.Id}, new { @class = "btn btn-primary" })
+                        var item = Model.RecList[index];
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title row">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-link" data-toggle="collapse" data-target=@("#collapse" + index)>@item.Name</button>
+                                    </div>
+                                    <div class="col-md-4">₹ @item.Price</div>
+                                    <div class="col-md-2">
+                                        @Html.ActionLink("+", "AddRecipe", "Dashboard", new { recId = item.Id }, new { @class = "btn btn-primary" })
+                                    </div> 
+                                </div>
+                            </div>
+                            <div id=@("collapse"+index) class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <h6>Calorie Count: @item.CalorieCount</h6>
+                                    <span>@item.Description</span>
+                                </div>
+                            </div>
+                        </div>
                     }
-                </ul>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-md-6">
         @Html.Partial("Cart", Model.CartItems)
     </div>
 </div>

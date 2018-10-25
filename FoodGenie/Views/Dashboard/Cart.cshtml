@@ -1,16 +1,78 @@
-﻿@model List<FoodGenie.Models.CartItem>
-<div class="panel panel-default">
+﻿@using FoodGenie.ViewModels
+@model List<FoodGenie.Models.CartItem>
+<div class="panel panel-primary panel-custom">
     <div class="panel-heading">Your Cart</div>
     <div class="panel-body">
-        <ul>
+        <div class="row">
             @foreach (var item in Model)
             {
-                <li> 
-                @Html.ActionLink("+", "CartIncrement", "Dashboard", new { itemId = item.Id }, new { @class = "btn btn-danger" })
-                @item.Recipe.Name with Count @item.Count
-                @Html.ActionLink("-", "CartDecrement", "Dashboard", new { itemId = item.Id }, new { @class = "btn btn-danger" })
-                </li>
-        }
-        </ul>
+                <div class="col-md-5">
+                    @item.Recipe.Name
+                </div>
+                <div class="col-md-1">
+                    <span class="badge">@item.Count</span>
+                </div>
+                <div class="col-md-3">
+                    @Html.ActionLink("+", "CartIncrement", "Dashboard", new { itemId = item.Id }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("-", "CartDecrement", "Dashboard", new { itemId = item.Id }, new { @class = "btn btn-danger" })
+                </div>
+                <div class="col-md-3">
+                    ₹ @((item.Count * item.Recipe.Price))
+                </div>
+            }
+        </div>
+        @{ double total = 0;}
+        <div class="row">
+            <div class="col-md-8">
+                @foreach (var item in Model)
+                {
+                    total += item.Count * item.Recipe.Price;
+                }
+            </div>
+            <div class="col-md-4">Total :₹ @total</div>
+        </div>
+        <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Checkout</button>
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Checkout</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{
+                            CheckoutViewModel tData = new CheckoutViewModel
+                            {
+                                Amount = total
+                            };
+                        }
+                        @Html.Partial("Checkout",tData)
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div id="successModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Success</h4>
+                    </div>
+                    <div class="modal-body">
+                        Order Completed and will be delivered soon!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
+                    </div>
+                </div>
+            </div>
+        </div>*@
     </div>
 </div>

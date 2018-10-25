@@ -1,0 +1,22 @@
+﻿@model FoodGenie.ViewModels.CheckoutViewModel
+@using (Html.BeginForm("Success", "Dashboard"))
+{
+    string val = (HttpContext.Current.Session["Address"] ?? string.Empty) as string;
+    if (!string.IsNullOrEmpty(val))
+    {
+        Model.Address = val;
+    }
+<div class="form-group">
+    @Html.LabelFor(c => c.Address)
+    @Html.TextAreaFor(c => c.Address, new { @class = "form-control", id = "taAddress" })
+    @Html.Hidden("Amount", Model.Amount)
+    @Html.Hidden("Address", "")
+    <script>
+        document.getElementById("Address").value = document.getElementById("taAddress").value;
+    </script>
+    @{
+        HttpContext.Current.Session["Address"] = Model.Address;
+    }
+    <button class="btn btn-success">Proceed to Pay @Model.Amount</button>
+</div>
+}
